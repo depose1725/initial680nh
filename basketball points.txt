@@ -1,0 +1,24 @@
+import requests
+from bs4 import BeautifulSoup
+
+# URL of the webpage containing NBA player statistics for the 2022/2023 season
+url = 'https://www.example.com/nba-stats'
+
+# Send an HTTP GET request to the webpage and retrieve the HTML content
+response = requests.get(url)
+html_content = response.text
+
+# Create a BeautifulSoup object to parse the HTML
+soup = BeautifulSoup(html_content, 'html.parser')
+
+# Find the HTML elements that contain the player names and points
+player_names = soup.find_all('span', class_='player-name')
+player_points = soup.find_all('span', class_='player-points')
+
+# Iterate over the player names and points to extract the data
+for name, points in zip(player_names, player_points):
+    player_name = name.text.strip()
+    player_points = points.text.strip()
+
+    # Store or process the collected data as needed
+    print(f"Player: {player_name}, Points: {player_points}")
